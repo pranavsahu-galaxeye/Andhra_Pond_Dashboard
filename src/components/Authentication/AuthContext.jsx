@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const auth = sessionStorage.getItem('isAuthenticated');
+    const auth = sessionStorage.getItem("isAuthenticated");
     if (auth) {
       setIsAuthenticated(true);
     }
@@ -16,14 +17,14 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsAuthenticated(true);
-    sessionStorage.setItem('isAuthenticated', 'true');
-    navigate('/dashboard');
+    sessionStorage.setItem("isAuthenticated", "true");
+    navigate("/dashboard");
   };
 
   const logout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('isAuthenticated');
-    navigate('/');
+    sessionStorage.removeItem("isAuthenticated");
+    navigate("/");
   };
 
   return (
@@ -31,4 +32,9 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+// PropTypes validation
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired, // Ensures children are passed and can be any renderable content
 };
